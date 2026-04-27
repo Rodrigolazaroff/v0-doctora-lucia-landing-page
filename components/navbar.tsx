@@ -1,15 +1,17 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
+
+const WHATSAPP_URL =
+  "https://wa.me/541169323425?text=Hola%20Dra.%20Lucia%2C%20me%20comunico%20desde%20su%20p%C3%A1gina%20web%20para%20solicitar%20un%20turno."
 
 const navLinks = [
   { href: "#inicio", label: "Inicio" },
   { href: "#sobre-mi", label: "Sobre mí" },
   { href: "#procedimientos", label: "Procedimientos" },
   { href: "#formacion", label: "Formación" },
-  { href: "#instagram", label: "Instagram" },
   { href: "#turnos", label: "Turnos" },
   { href: "#contacto", label: "Contacto" },
 ]
@@ -19,33 +21,32 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 10)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const handleNavClick = () => {
-    setIsOpen(false)
-  }
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-transparent"
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-blue-100"
+          : "bg-transparent"
       }`}
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo placeholder */}
-          <a href="#inicio" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center">
-              <span className="text-primary font-semibold text-sm">LN</span>
+          {/* Logo */}
+          <a href="#inicio" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shadow-sm">
+              <Shield className="w-5 h-5 text-white" />
             </div>
-            <span className="font-semibold text-foreground hidden sm:block">
-              Dra. Lucia Nosetti
-            </span>
+            <div className="flex flex-col leading-none">
+              <span className="font-bold text-foreground text-sm">Dra. Lucia Nosetti</span>
+              <span className="text-[10px] text-primary font-medium tracking-wide hidden sm:block">
+                Dermatología · Medicina Estética
+              </span>
+            </div>
           </a>
 
           {/* Desktop navigation */}
@@ -61,6 +62,15 @@ export function Navbar() {
               </li>
             ))}
           </ul>
+
+          {/* CTA button (desktop) */}
+          <div className="hidden lg:flex items-center gap-3">
+            <Button asChild size="sm" className="gap-1.5 shadow-sm">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                Pedir turno
+              </a>
+            </Button>
+          </div>
 
           {/* Mobile menu button */}
           <Button
@@ -82,13 +92,24 @@ export function Navbar() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    onClick={handleNavClick}
+                    onClick={() => setIsOpen(false)}
                     className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
                   >
                     {link.label}
                   </a>
                 </li>
               ))}
+              <li className="pt-2">
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-3 text-sm font-semibold text-white bg-primary rounded-md text-center"
+                >
+                  Pedir turno por WhatsApp
+                </a>
+              </li>
             </ul>
           </div>
         )}

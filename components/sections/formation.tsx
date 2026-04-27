@@ -78,20 +78,18 @@ export function FormationSection() {
           <h3 className="text-xl font-semibold text-foreground mb-6 text-center">
             Experiencia profesional previa
           </h3>
-          <div className="overflow-x-auto pb-4 -mx-4 px-4">
-            <div className="flex gap-4 min-w-max">
+          <div className="grid sm:grid-cols-2 gap-3">
               {experience.map((item, index) => (
                 <div
                   key={index}
                   className="bg-card rounded-xl px-6 py-4 shadow-sm border border-border flex items-center gap-3 hover:shadow-md transition-shadow"
                 >
                   <Building2 className="w-5 h-5 text-primary shrink-0" />
-                  <span className="text-sm font-medium text-foreground whitespace-nowrap">
+                  <span className="text-sm font-medium text-foreground">
                     {item}
                   </span>
                 </div>
               ))}
-            </div>
           </div>
         </AnimatedSection>
       </div>
